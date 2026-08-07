@@ -109,14 +109,16 @@
   /* ---------- HERO ---------- */
   .hero {
   position: relative;
-  height: 100vh; 
-  min-height: 640px;
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
+  min-height: 100vh;
+  padding-top: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 48px;
   /* Rich multi-layered radial gradient */
   background: 
     radial-gradient(circle at 50% 20%, rgba(28, 109, 208, 0.12) 0%, transparent 50%),
@@ -200,6 +202,57 @@
   }
   @keyframes flow{
     0%{opacity:0.2;} 50%{opacity:1;} 100%{opacity:0.2;}
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-marquee{
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+
+  .gallery-track{
+    display:flex; gap:16px; width:max-content;
+    animation:marquee 30s linear infinite;
+  }
+  .gallery-marquee:hover .gallery-track{animation-play-state:paused;}
+
+  .gallery-item{
+    position:relative; flex:none;
+    height:240px; width:340px;
+    border-radius:16px; overflow:hidden;
+    background:var(--panel-2);
+  }
+  .gallery-item img{
+    width:100%; height:100%; object-fit:cover; border-radius:inherit;
+  }
+  .gallery-item.ph img{display:none;}
+  .gallery-item.ph::after{
+    content:"Photo coming soon";
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gray); font-size:13px; font-weight:500;
+  }
+
+  @keyframes marquee{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* full-bleed strip inside the padded .hero — widen past the hero's own
+     24px side padding with negative margins instead of 100vw/50vw math,
+     which breaks under align-items:center (the flex item's un-offset
+     position is centered, not flush-left, so vw-based offsets land wrong) */
+  .hero-gallery{
+    margin-top:104px;
+    width:calc(100% + 48px);
+    margin-left:-24px;
+    margin-right:-24px;
+  }
+
+  @media (max-width:600px){
+    .gallery-item{height:170px; width:240px;}
+    .hero-gallery{margin-top:64px;}
   }
 
   /* ---------- HORIZON DIVIDER (signature) ---------- */
